@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Status Scroller</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .scroller {
+            width: 300px;
+            height: 400px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .robot-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        .robot-item i {
+            margin-right: 10px;
+        }
+        .online {
+            color: green;
+        }
+        .offline {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h2>Active Robots</h2>
+    <div class="scroller" id="robotList">
+        <!-- Robot items will be dynamically added here -->
+    </div>
+
+    <script>
+        // Example JSON data received from robot hardware
+        const robotData = {
+            "robot1": true,
+            "robot2": false,
+            "robot3": true,
+            "robot4": false
+        };
+
+        function updateRobotList(data) {
+            const robotList = document.getElementById('robotList');
+            robotList.innerHTML = ''; // Clear existing list
+
+            for (const [robot, status] of Object.entries(data)) {
+                const robotItem = document.createElement('div');
+                robotItem.className = 'robot-item';
+
+                const icon = document.createElement('i');
+                icon.className = `fa fa-wifi ${status ? 'online' : 'offline'}`;
+
+                const robotName = document.createElement('span');
+                robotName.textContent = robot;
+
+                robotItem.appendChild(icon);
+                robotItem.appendChild(robotName);
+                robotList.appendChild(robotItem);
+            }
+        }
+
+        // Simulate receiving JSON data from POST request
+        setInterval(() => {
+            // In real-world usage, replace this with actual fetch from the server
+            updateRobotList(robotData);
+        }, 5000);
+    </script>
+</body>
+</html>
