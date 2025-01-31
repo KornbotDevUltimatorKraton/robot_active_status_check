@@ -11,6 +11,10 @@ def index():
 def router_status():
 
      return render_template("index2.html")
+@app.route("/status_board")
+def status_board():
+
+     return render_template("index3.html")
 if __name__ == "__main__":
 
         app.run(debug=True,threaded=True,host="0.0.0.0",port=9567)
